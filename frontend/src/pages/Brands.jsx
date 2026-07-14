@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { Search, ArrowRight } from "lucide-react";
 import api from "@/lib/api";
+import BrandLogo from "@/components/BrandLogo";
 
 export default function Brands() {
   const [brands, setBrands] = useState([]);
@@ -73,12 +74,7 @@ export default function Brands() {
             className="ne-card p-7 group flex flex-col"
           >
             <div className="flex items-start justify-between mb-6">
-              <div
-                className="w-16 h-16 flex items-center justify-center font-black text-black text-lg tracking-wider"
-                style={{ background: b.accent_color }}
-              >
-                {b.logo_text}
-              </div>
+              <BrandLogo brand={b} className="w-16 h-16" textClass="text-lg" />
               <div className="mono text-[10px] text-white/40 tracking-widest">{b.category.toUpperCase()}</div>
             </div>
             <div className="font-black text-white text-2xl uppercase leading-tight">{b.name}</div>

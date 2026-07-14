@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Check, MessageCircle, Phone } from "lucide-react";
 import { toast } from "sonner";
 import api from "@/lib/api";
+import BrandLogo from "@/components/BrandLogo";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -56,12 +57,7 @@ export default function ProductDetail() {
         <div className="lg:col-span-6">
           {brand && (
             <div className="flex items-center gap-3 mb-4">
-              <div
-                className="w-10 h-10 flex items-center justify-center font-black text-black text-xs"
-                style={{ background: brand.accent_color }}
-              >
-                {brand.logo_text}
-              </div>
+              <BrandLogo brand={brand} className="w-10 h-10" textClass="text-xs" />
               <div>
                 <div className="text-white font-bold text-sm">{brand.name}</div>
                 <div className="mono text-[10px] text-white/40 tracking-widest">{product.category.toUpperCase()} · {product.sub_category?.toUpperCase()}</div>

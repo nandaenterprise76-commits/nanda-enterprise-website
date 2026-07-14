@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Search, Filter } from "lucide-react";
 import api from "@/lib/api";
+import BrandLogo from "@/components/BrandLogo";
 
 export default function BrandDetail() {
   const { slug } = useParams();
@@ -47,12 +48,7 @@ export default function BrandDetail() {
           </Link>
           <div className="grid lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-2">
-              <div
-                className="w-32 h-32 flex items-center justify-center font-black text-black text-3xl tracking-wider"
-                style={{ background: brand.accent_color }}
-              >
-                {brand.logo_text}
-              </div>
+              <BrandLogo brand={brand} className="w-32 h-32" textClass="text-3xl" />
             </div>
             <div className="lg:col-span-10">
               <div className="mono text-xs tracking-widest" style={{ color: brand.accent_color }}>{brand.category.toUpperCase()}</div>

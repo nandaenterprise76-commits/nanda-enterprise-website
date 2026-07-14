@@ -82,6 +82,7 @@ class Brand(BaseModel):
     category: str  # Lubricants, Batteries, Tyres, Spare Parts, Car Care, Filters, Bearings
     description: str = ""
     logo_text: str = ""  # short 3-4 chars for stylised logo
+    logo_image: str = ""  # external URL to real brand logo image
     hero_image: str = ""
     accent_color: str = "#FF9F1C"
     created_at: str = Field(default_factory=now_iso)
@@ -93,6 +94,7 @@ class BrandIn(BaseModel):
     category: str
     description: Optional[str] = ""
     logo_text: Optional[str] = ""
+    logo_image: Optional[str] = ""
     hero_image: Optional[str] = ""
     accent_color: Optional[str] = "#FF9F1C"
 
@@ -270,25 +272,28 @@ app.add_middleware(
 
 # --------- Seed Data ---------
 SEED_BRANDS = [
-    {"slug": "mak", "name": "MAK Lubricants", "tagline": "All Automotive & Industrial Lubricants", "category": "Lubricants", "logo_text": "MAK", "accent_color": "#E63946", "description": "Premium Bharat Petroleum lubricants engineered for peak engine performance across passenger cars, commercial vehicles and industrial machinery."},
-    {"slug": "hp", "name": "HP Lubricants", "tagline": "Because your bike deserves main-character energy", "category": "Lubricants", "logo_text": "HP", "accent_color": "#00A651", "description": "Hindustan Petroleum's flagship line of automotive and industrial lubricants including HP Racer Gen-G for two-wheelers."},
-    {"slug": "veedol", "name": "Veedol", "tagline": "Lubricants & Car Care", "category": "Lubricants", "logo_text": "VDL", "accent_color": "#0057B7", "description": "Legacy engine oils and car care solutions with over a century of motoring heritage."},
-    {"slug": "petronas", "name": "Petronas", "tagline": "Automotive Lubricants", "category": "Lubricants", "logo_text": "PTX", "accent_color": "#00A19A", "description": "Fluid technology solutions engineered in Turin — Petronas Syntium, Sprinta and Urania ranges."},
-    {"slug": "gulf", "name": "Gulf Pride", "tagline": "Start Mast Toh Din Zabardast", "category": "Batteries", "logo_text": "GLF", "accent_color": "#FF6B00", "description": "Gulf Pride two-wheeler batteries with maintenance-free technology and superior cold-cranking performance."},
-    {"slug": "varroc", "name": "Varroc", "tagline": "Full range two-wheeler spares & fibre", "category": "Spare Parts", "logo_text": "VRC", "accent_color": "#D62828", "description": "OEM-grade two-wheeler electricals, lighting, fibre body panels and mechanical spares."},
-    {"slug": "diamond", "name": "Diamond Chain", "tagline": "TI India — Chain Kits & More", "category": "Spare Parts", "logo_text": "DMD", "accent_color": "#1D3557", "description": "Precision-engineered chain-sprocket kits by Tube Investments of India, built for endurance and low elongation."},
-    {"slug": "mahle", "name": "MAHLE", "tagline": "Filtration & Engine Components", "category": "Filters", "logo_text": "MHL", "accent_color": "#00843D", "description": "German engineering excellence — oil, air, cabin and fuel filters plus critical engine components."},
-    {"slug": "niterra", "name": "Niterra (NGK & NTK)", "tagline": "Aapki Gaadi Ka Mr. Dependable", "category": "Spare Parts", "logo_text": "NGK", "accent_color": "#FDB913", "description": "Global leader in spark plugs, ignition coils and oxygen sensors — formerly NGK Spark Plug Co."},
-    {"slug": "ask", "name": "ASK Automotive", "tagline": "Brake Shoes, Cables & More", "category": "Spare Parts", "logo_text": "ASK", "accent_color": "#8338EC", "description": "Two-wheeler friction materials, brake shoes and control cables trusted by major OEMs across India."},
-    {"slug": "skf", "name": "SKF", "tagline": "Bearings & Rotating Solutions", "category": "Bearings", "logo_text": "SKF", "accent_color": "#005AA7", "description": "Swedish precision bearings, seals and lubrication systems for automotive and industrial applications."},
-    {"slug": "makino", "name": "Makino", "tagline": "Brake Shoes & Friction", "category": "Spare Parts", "logo_text": "MKN", "accent_color": "#457B9D", "description": "High-durability brake shoes and clutch components engineered for Indian road conditions."},
-    {"slug": "magsol", "name": "Magsol", "tagline": "A Dorf Ket Brand — Car Care", "category": "Car Care", "logo_text": "MGS", "accent_color": "#F72585", "description": "Complete car care line — shampoos, polishes, dashboard shiners and premium wax coatings."},
-    {"slug": "endurance", "name": "Endurance", "tagline": "Complete Two-Wheeler Solutions", "category": "Spare Parts", "logo_text": "END", "accent_color": "#EF476F", "description": "Suspension, transmission, braking and alloy wheel systems from India's OEM powerhouse."},
-    {"slug": "rockman", "name": "Rockman", "tagline": "Chain Kits & Precision Parts", "category": "Spare Parts", "logo_text": "RCK", "accent_color": "#2A9D8F", "description": "Hero MotoCorp-backed chain kits and machined components engineered for silent, long-life operation."},
-    {"slug": "uno-minda", "name": "Uno Minda", "tagline": "Driving the new two-wheeler spare", "category": "Spare Parts", "logo_text": "UMD", "accent_color": "#E76F51", "description": "Switches, horns, sensors, lighting and connectors — the electronic backbone of modern two-wheelers."},
-    {"slug": "tvs-tyres", "name": "TVS Tyres", "tagline": "Grip that never quits", "category": "Tyres", "logo_text": "TVS", "accent_color": "#003399", "description": "Two-wheeler tyres engineered with proprietary Silica-Rich compounds for wet & dry grip."},
-    {"slug": "metro", "name": "Metro Tyres", "tagline": "For Two-Wheeler & Toto", "category": "Tyres", "logo_text": "MTR", "accent_color": "#6A0572", "description": "Robust two-wheeler and e-rickshaw (Toto) tyres built for Indian last-mile mobility."},
+    {"slug": "mak", "name": "MAK Lubricants", "tagline": "All Automotive & Industrial Lubricants", "category": "Lubricants", "logo_text": "MAK", "accent_color": "#E63946", "domain": "bharatpetroleum.in", "description": "Premium Bharat Petroleum lubricants engineered for peak engine performance across passenger cars, commercial vehicles and industrial machinery."},
+    {"slug": "hp", "name": "HP Lubricants", "tagline": "Because your bike deserves main-character energy", "category": "Lubricants", "logo_text": "HP", "accent_color": "#00A651", "domain": "hindustanpetroleum.com", "description": "Hindustan Petroleum's flagship line of automotive and industrial lubricants including HP Racer Gen-G for two-wheelers."},
+    {"slug": "veedol", "name": "Veedol", "tagline": "Lubricants & Car Care", "category": "Lubricants", "logo_text": "VDL", "accent_color": "#0057B7", "domain": "veedol.com", "description": "Legacy engine oils and car care solutions with over a century of motoring heritage."},
+    {"slug": "petronas", "name": "Petronas", "tagline": "Automotive Lubricants", "category": "Lubricants", "logo_text": "PTX", "accent_color": "#00A19A", "domain": "pli-petronas.com", "description": "Fluid technology solutions engineered in Turin — Petronas Syntium, Sprinta and Urania ranges."},
+    {"slug": "gulf", "name": "Gulf Pride", "tagline": "Start Mast Toh Din Zabardast", "category": "Batteries", "logo_text": "GLF", "accent_color": "#FF6B00", "domain": "gulfoilindia.com", "description": "Gulf Pride two-wheeler batteries with maintenance-free technology and superior cold-cranking performance."},
+    {"slug": "varroc", "name": "Varroc", "tagline": "Full range two-wheeler spares & fibre", "category": "Spare Parts", "logo_text": "VRC", "accent_color": "#D62828", "domain": "varrocgroup.com", "description": "OEM-grade two-wheeler electricals, lighting, fibre body panels and mechanical spares."},
+    {"slug": "diamond", "name": "Diamond Chain", "tagline": "TI India — Chain Kits & More", "category": "Spare Parts", "logo_text": "DMD", "accent_color": "#1D3557", "domain": "tichains.com", "description": "Precision-engineered chain-sprocket kits by Tube Investments of India, built for endurance and low elongation."},
+    {"slug": "mahle", "name": "MAHLE", "tagline": "Filtration & Engine Components", "category": "Filters", "logo_text": "MHL", "accent_color": "#00843D", "domain": "mahle.com", "description": "German engineering excellence — oil, air, cabin and fuel filters plus critical engine components."},
+    {"slug": "niterra", "name": "Niterra (NGK & NTK)", "tagline": "Aapki Gaadi Ka Mr. Dependable", "category": "Spare Parts", "logo_text": "NGK", "accent_color": "#FDB913", "domain": "niterra.com", "description": "Global leader in spark plugs, ignition coils and oxygen sensors — formerly NGK Spark Plug Co."},
+    {"slug": "ask", "name": "ASK Automotive", "tagline": "Brake Shoes, Cables & More", "category": "Spare Parts", "logo_text": "ASK", "accent_color": "#8338EC", "domain": "askautoltd.com", "description": "Two-wheeler friction materials, brake shoes and control cables trusted by major OEMs across India."},
+    {"slug": "skf", "name": "SKF", "tagline": "Bearings & Rotating Solutions", "category": "Bearings", "logo_text": "SKF", "accent_color": "#005AA7", "domain": "skf.com", "description": "Swedish precision bearings, seals and lubrication systems for automotive and industrial applications."},
+    {"slug": "makino", "name": "Makino", "tagline": "Brake Shoes & Friction", "category": "Spare Parts", "logo_text": "MKN", "accent_color": "#457B9D", "domain": "makinoauto.com", "description": "High-durability brake shoes and clutch components engineered for Indian road conditions."},
+    {"slug": "magsol", "name": "Magsol", "tagline": "A Dorf Ket Brand — Car Care", "category": "Car Care", "logo_text": "MGS", "accent_color": "#F72585", "domain": "dorfketal.com", "description": "Complete car care line — shampoos, polishes, dashboard shiners and premium wax coatings."},
+    {"slug": "endurance", "name": "Endurance", "tagline": "Complete Two-Wheeler Solutions", "category": "Spare Parts", "logo_text": "END", "accent_color": "#EF476F", "domain": "endurancegroup.com", "description": "Suspension, transmission, braking and alloy wheel systems from India's OEM powerhouse."},
+    {"slug": "rockman", "name": "Rockman", "tagline": "Chain Kits & Precision Parts", "category": "Spare Parts", "logo_text": "RCK", "accent_color": "#2A9D8F", "domain": "rockmangroup.com", "description": "Hero MotoCorp-backed chain kits and machined components engineered for silent, long-life operation."},
+    {"slug": "uno-minda", "name": "Uno Minda", "tagline": "Driving the new two-wheeler spare", "category": "Spare Parts", "logo_text": "UMD", "accent_color": "#E76F51", "domain": "unominda.com", "description": "Switches, horns, sensors, lighting and connectors — the electronic backbone of modern two-wheelers."},
+    {"slug": "tvs-tyres", "name": "TVS Tyres", "tagline": "Grip that never quits", "category": "Tyres", "logo_text": "TVS", "accent_color": "#003399", "domain": "tvstyres.com", "description": "Two-wheeler tyres engineered with proprietary Silica-Rich compounds for wet & dry grip."},
+    {"slug": "metro", "name": "Metro Tyres", "tagline": "For Two-Wheeler & Toto", "category": "Tyres", "logo_text": "MTR", "accent_color": "#6A0572", "domain": "metrotyres.com", "description": "Robust two-wheeler and e-rickshaw (Toto) tyres built for Indian last-mile mobility."},
 ]
+
+def _logo_url_for(domain: str) -> str:
+    return f"https://www.google.com/s2/favicons?domain={domain}&sz=256"
 
 def _mock_products_for_brand(b):
     cat = b["category"]
@@ -382,12 +387,23 @@ async def startup():
     # Seed brands + products
     if await db.brands.count_documents({}) == 0:
         for b in SEED_BRANDS:
-            brand = Brand(**b)
+            b_copy = {k: v for k, v in b.items() if k != "domain"}
+            b_copy["logo_image"] = _logo_url_for(b["domain"])
+            brand = Brand(**b_copy)
             await db.brands.insert_one(brand.model_dump())
             for p in _mock_products_for_brand(b):
                 prod = Product(**p)
                 await db.products.insert_one(prod.model_dump())
         logger.info("Seeded %d brands with products", len(SEED_BRANDS))
+    else:
+        # Backfill logo_image for existing seeded brands
+        domain_by_slug = {b["slug"]: b["domain"] for b in SEED_BRANDS}
+        cursor = db.brands.find({"$or": [{"logo_image": {"$exists": False}}, {"logo_image": ""}]}, {"_id": 0})
+        async for doc in cursor:
+            d = domain_by_slug.get(doc["slug"])
+            if d:
+                await db.brands.update_one({"id": doc["id"]}, {"$set": {"logo_image": _logo_url_for(d)}})
+        logger.info("Backfilled logo_image for existing brands")
 
 @app.on_event("shutdown")
 async def shutdown():

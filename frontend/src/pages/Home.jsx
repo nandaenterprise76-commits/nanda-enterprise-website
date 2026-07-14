@@ -4,6 +4,7 @@ import { ArrowRight, Shield, Truck, Award, Sparkles, Wrench, Fuel, Battery, Disc
 import api from "@/lib/api";
 import HeroCarousel from "@/components/HeroCarousel";
 import BrandMarquee from "@/components/BrandMarquee";
+import BrandLogo from "@/components/BrandLogo";
 
 const CATEGORY_ICONS = {
   Lubricants: Fuel,
@@ -105,12 +106,7 @@ export default function Home() {
               data-testid={`featured-brand-${b.slug}`}
               className="ne-card p-5 flex flex-col items-center text-center group"
             >
-              <div
-                className="w-14 h-14 flex items-center justify-center font-black text-black text-sm mb-3 group-hover:scale-110 transition-transform"
-                style={{ background: b.accent_color }}
-              >
-                {b.logo_text}
-              </div>
+              <BrandLogo brand={b} className="w-16 h-16 mb-3 group-hover:scale-110 transition-transform" textClass="text-sm" />
               <div className="font-bold text-white text-sm uppercase leading-tight">{b.name}</div>
               <div className="mono text-[10px] text-white/40 tracking-widest mt-1">{b.category}</div>
             </Link>
