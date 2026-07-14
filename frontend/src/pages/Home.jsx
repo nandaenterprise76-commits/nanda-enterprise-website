@@ -99,7 +99,7 @@ export default function Home() {
           </div>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-          {brands.slice(0, 12).map((b) => (
+          {brands.map((b) => (
             <Link
               key={b.id}
               to={`/brands/${b.slug}`}
